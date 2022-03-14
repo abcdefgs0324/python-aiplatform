@@ -429,6 +429,7 @@ class LocalModel:
         artifact_uri: Optional[str] = None,
         credential_path: Optional[str] = None,
         host_port: Optional[str] = None,
+        runtime: Optional[str] = None,
         container_ready_timeout: Optional[int] = None,
         container_ready_check_interval: Optional[int] = None,
     ):
@@ -466,6 +467,9 @@ class LocalModel:
             host_port (str):
                 Optional. The port on the host that the port, AIP_HTTP_PORT, inside the container
                 will be exposed as. If it's unset, a random host port will be assigned.
+            runtime (str):
+                Optional. Runtime to use with this container. For example, to use NVIDIA GPU with
+                the container, need to specify "nvidia".
             container_ready_timeout (int):
                 Optional. The timeout in second used for starting the container or succeeding the
                 first health check.
@@ -491,6 +495,7 @@ class LocalModel:
                 serving_container_ports=ports,
                 credential_path=credential_path,
                 host_port=host_port,
+                runtime=runtime,
                 container_ready_timeout=container_ready_timeout,
                 container_ready_check_interval=container_ready_check_interval,
             ) as local_endpoint:

@@ -105,6 +105,7 @@ class TestRun:
                 run._ADC_ENVIRONMENT_VARIABLE: run._DEFAULT_CONTAINER_CRED_KEY_PATH,
             },
             volumes=[],
+            runtime=None,
             detach=True,
         )
 
@@ -130,6 +131,7 @@ class TestRun:
             run._ADC_ENVIRONMENT_VARIABLE
         ] = run._DEFAULT_CONTAINER_CRED_KEY_PATH
         volumes = [f"{credential_path}:{run._DEFAULT_CONTAINER_CRED_KEY_PATH}"]
+        runtime = "nvidia"
 
         run.run_prediction_container(
             self.IMAGE_URI,
@@ -142,6 +144,7 @@ class TestRun:
             serving_container_ports=serving_container_ports,
             credential_path=credential_path,
             host_port=host_port,
+            runtime=runtime,
         )
 
         docker_client_mock.containers.run.assert_called_once_with(
@@ -151,6 +154,7 @@ class TestRun:
             ports={serving_container_ports[0]: host_port},
             environment=environment,
             volumes=volumes,
+            runtime=runtime,
             detach=True,
         )
 
@@ -179,6 +183,7 @@ class TestRun:
                 run._ADC_ENVIRONMENT_VARIABLE: run._DEFAULT_CONTAINER_CRED_KEY_PATH,
             },
             volumes=volumes,
+            runtime=None,
             detach=True,
         )
 

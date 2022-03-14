@@ -1462,6 +1462,7 @@ class TestLocalModel:
             serving_container_ports=[],
             credential_path=None,
             host_port=None,
+            runtime=None,
             container_ready_timeout=None,
             container_ready_check_interval=None,
         )
@@ -1479,6 +1480,7 @@ class TestLocalModel:
         artifact_uri = "gs://myproject/mymodel"
         credential_path = "key.json"
         host_port = 6666
+        runtime = "nvidia"
         container_ready_timeout = 60
         container_ready_check_interval = 5
 
@@ -1486,6 +1488,7 @@ class TestLocalModel:
             artifact_uri=artifact_uri,
             credential_path=credential_path,
             host_port=host_port,
+            runtime=runtime,
             container_ready_timeout=container_ready_timeout,
             container_ready_check_interval=container_ready_check_interval,
         ):
@@ -1502,6 +1505,7 @@ class TestLocalModel:
             serving_container_ports=[],
             credential_path=credential_path,
             host_port=host_port,
+            runtime=runtime,
             container_ready_timeout=container_ready_timeout,
             container_ready_check_interval=container_ready_check_interval,
         )
@@ -1628,6 +1632,7 @@ class TestLocalEndpoint:
             serving_container_ports=None,
             credential_path=None,
             host_port=None,
+            runtime=None,
         )
         wait_until_container_runs_mock.assert_called_once_with()
         wait_until_health_check_succeeds_mock.assert_called_once_with()
@@ -1650,6 +1655,7 @@ class TestLocalEndpoint:
         serving_container_ports = [5555]
         credential_path = "key.json"
         host_port = 6666
+        runtime = "nvidia"
         container_ready_timeout = 60
         container_ready_check_interval = 5
 
@@ -1664,6 +1670,7 @@ class TestLocalEndpoint:
             serving_container_ports=serving_container_ports,
             credential_path=credential_path,
             host_port=host_port,
+            runtime=runtime,
             container_ready_timeout=container_ready_timeout,
             container_ready_check_interval=container_ready_check_interval,
         ):
@@ -1680,6 +1687,7 @@ class TestLocalEndpoint:
             serving_container_ports=serving_container_ports,
             credential_path=credential_path,
             host_port=host_port,
+            runtime=runtime,
         )
         wait_until_container_runs_mock.assert_called_once_with()
         wait_until_health_check_succeeds_mock.assert_called_once_with()
@@ -1709,6 +1717,7 @@ class TestLocalEndpoint:
             serving_container_ports=None,
             credential_path=None,
             host_port=None,
+            runtime=None,
         )
         wait_until_container_runs_mock.assert_called_once_with()
         wait_until_health_check_succeeds_mock.assert_called_once_with()

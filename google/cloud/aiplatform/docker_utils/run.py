@@ -59,6 +59,7 @@ def run_prediction_container(
     serving_container_ports: Optional[Sequence[int]] = None,
     credential_path: Optional[str] = None,
     host_port: Optional[int] = None,
+    runtime: Optional[str] = None,
 ) -> docker.models.containers.Container:
     """Runs a prediction container locally.
 
@@ -110,6 +111,9 @@ def run_prediction_container(
         host_port (int):
             Optional. The port on the host that the port, AIP_HTTP_PORT, inside the container
             will be exposed as. If it's unset, a random host port will be assigned.
+        runtime (str):
+            Optional. Runtime to use with this container. For example, to use NVIDIA GPU with
+            the container, need to specify "nvidia".
 
     Returns:
         The container object running in the background.
@@ -169,6 +173,7 @@ def run_prediction_container(
         ports={port: host_port},
         environment=envs,
         volumes=volumes,
+        runtime=runtime,
         detach=True,
     )
 

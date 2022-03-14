@@ -52,6 +52,7 @@ class LocalEndpoint:
         serving_container_ports: Optional[Sequence[int]] = None,
         credential_path: Optional[str] = None,
         host_port: Optional[str] = None,
+        runtime: Optional[str] = None,
         container_ready_timeout: Optional[int] = None,
         container_ready_check_interval: Optional[int] = None,
     ):
@@ -105,6 +106,9 @@ class LocalEndpoint:
             host_port (str):
                 Optional. The port on the host that the port, AIP_HTTP_PORT, inside the container
                 will be exposed as. If it's unset, a random host port will be assigned.
+            runtime (str):
+                Optional. Runtime to use with this container. For example, to use NVIDIA GPU with
+                the container, need to specify "nvidia".
             container_ready_timeout (int):
                 Optional. The timeout in second used for starting the container or succeeding the
                 first health check.
@@ -128,12 +132,13 @@ class LocalEndpoint:
             serving_container_environment_variables
         )
         self.serving_container_ports = serving_container_ports
-        self.credential_path = credential_path
-        self.host_port = host_port
-
         self.container_port = prediction_utils.get_prediction_aip_http_port(
             serving_container_ports
         )
+
+        self.credential_path = credential_path
+        self.host_port = host_port
+        self.runtime = runtime
 
         self.container_ready_timeout = (
             container_ready_timeout or _DEFAULT_CONTAINER_READY_TIMEOUT
@@ -181,6 +186,7 @@ class LocalEndpoint:
                 serving_container_ports=self.serving_container_ports,
                 credential_path=self.credential_path,
                 host_port=self.host_port,
+                runtime=self.runtime,
             )
 
             # Retrieves the assigned host port.
