@@ -156,6 +156,8 @@ class LocalModel:
         base_image: str = "python:3.7",
         requirements_path: Optional[str] = None,
         extra_packages: Optional[List[str]] = None,
+        container_workdir: Optional[str] = None,
+        container_home: Optional[str] = None,
         no_cache: bool = False,
     ) -> "LocalModel":
         """Creates a local model from a custom predictor.
@@ -218,6 +220,10 @@ class LocalModel:
                 to the image and the needed packages listed in it will be installed.
             extra_packages (List[str]):
                 Optional. The list of user custom dependency packages to install.
+            container_workdir (str):
+                Optional. The working directory in the container.
+            container_home (str):
+                Optional. The $HOME directory in the container.
             no_cache (bool):
                 Required. Do not use cache when building the image. Using build cache usually
                 reduces the image building time. See
@@ -244,6 +250,8 @@ class LocalModel:
             requirements_path=requirements_path,
             extra_requirements=_DEFAULT_SDK_REQUIREMENTS,
             extra_packages=extra_packages,
+            container_workdir=container_workdir,
+            container_home=container_home,
             exposed_ports=[DEFAULT_HTTP_PORT],
             pip_command="pip3" if is_prebuilt_prediction_image else "pip",
             python_command="python3" if is_prebuilt_prediction_image else "python",

@@ -294,6 +294,7 @@ def make_dockerfile(
     dockerfile = textwrap.dedent(
         """
         FROM {base_image}
+        USER root
 
         # Keeps Python from generating .pyc files in the container
         ENV PYTHONDONTWRITEBYTECODE=1
